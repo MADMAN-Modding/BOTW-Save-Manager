@@ -6,33 +6,33 @@
 async function makeListings() {
     let folders = await invoke("get_folders_in_dir", {"path": await invoke("get_data_dir")});
 
-    let backups = document.getElementById("backups");
+    let saves = document.getElementById("saves");
 
-    backups.innerHTML = "";
+    saves.innerHTML = "";
 
     folders.forEach(async folder => {
         let img = await getImage(folder);
-        backups.innerHTML += `
-            <div class="backup">
+        saves.innerHTML += `
+            <div class="save">
                 <span>${folder}</span>
-                <img class="controlIcons" id="load" onclick=loadBackup("${folder}") src="images/load.png"/>
-                <img class="controlIcons" id="delete" onclick=removeBackup("${folder}") src="images/delete.png"/>
+                <img class="controlIcons" id="load" onclick=loadSave("${folder}") src="images/load.png"/>
+                <img class="controlIcons" id="delete" onclick=removeSave("${folder}") src="images/delete.png"/>
                 <img id="saveIcon" src="${img}"/>
             </div>`;
     });
     
 }
 
-async function newBackup() {
-    pushNotification("Creating backup");
+async function newSave() {
+    pushNotification("Creating save");
 
-    let backupName = document.getElementById("backupName").value;
+    let saveName = document.getElementById("saveName").value;
 
-    console.log(backupName);
+    console.log(saveName);
 
     let illegalChars = ["\"", "\\", "/"];
 
-    if (backupName == "") {
+    if (saveName == "") {
         pushNotification("No path provided");
         return;
     }
@@ -40,27 +40,35 @@ async function newBackup() {
     for (let index = 0; index < illegalChars.length; index++) {
         const char = illegalChars[index];
         
-        if (backupName.includes(char)) {
+        if (saveName.includes(char)) {
             await pushNotification(`Illegal Char: ${char}`);
             return;
         }
     }
 
-    invoke("new_backup", {"name": backupName}).catch(error => pushNotification(error));
+    invoke("new_save", {"name": saveName}).catch(error => pushNotification(error));
 
-    pushNotification("Backup Complete");
+    pushNotification("Save Complete");
 
     makeListings();
 }
 
-async function removeBackup(path) {
-    pushNotification("Removing Backup: " + path);
+async function removeSave(path) {
+    pushNotification("Removing Save: " + path);
 
-    await invoke("remove_backup", {"path": path});
+    await invoke("remove_save", {"path": path});
 
-    pushNotification("Removed Backup: " + path);
+    pushNotification("Removed Save: " + path);
 
     makeListings()
+}
+
+async function loadSave(path) {
+    pushNotification("Loading Save: " + path);
+
+    await invoke("load_save", {"path": path});
+
+    pushNotification("Loaded Save: " + path);
 }
 
 /**

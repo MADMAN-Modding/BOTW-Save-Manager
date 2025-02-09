@@ -8,19 +8,19 @@
     <script src="js/index.js" defer></script>
     <script src="js/jsonHandler.js" defer></script>
     <script src="js/notifications.js" defer></script>
-    <script src="js/backupHandler.js" defer></script>
+    <script src="js/saveHandler.js" defer></script>
   </head>
 
   <body>
     <h1>Welcome to the BOTW Save Manager</h1>
 
     <center>
-      <label for="backupName">New Backup Name</label>
-      <input id="backupName" name="backupName" value="" type="text">
-      <button onclick="newBackup()">Make Backup</button>
+      <label for="saveName">New Save Name</label>
+      <input id="saveName" name="saveName" value="" type="text">
+      <button onclick="newSave()">Make Save</button>
     </center>
 
-    <div id="backups"></div>
+    <div id="saves"></div>
 
     <div id="page"></div>
     <div id="notification">
