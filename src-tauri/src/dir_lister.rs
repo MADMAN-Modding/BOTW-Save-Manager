@@ -43,7 +43,12 @@ fn get_items(files: bool) -> Result<Vec<String>, Box<dyn Error>> {
     Ok(items)
 }
 
-pub fn get_dir() -> Result<ReadDir, Box<dyn std::error::Error>> {
+/// ReadDir object for the path of the saves
+/// 
+/// **Returns**
+/// * ReadDir - If the dir exists
+/// * Box<dyn Error> - If the dir doesn't exist
+fn get_dir() -> Result<ReadDir, Box<dyn Error>> {
     let dir = fs::read_dir(r"C:\Users\mad\Documents\Emulators\Wii U\Cemu\mlc01\usr\save\00050000\101c9400\user\80000001")?;
 
     Ok(dir)

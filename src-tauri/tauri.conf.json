@@ -10,8 +10,8 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "botw-save-manager",
-        "width": 800,
+        "title": "BOTW Save Manager",
+        "width": 1000,
         "height": 600
       }
     ],

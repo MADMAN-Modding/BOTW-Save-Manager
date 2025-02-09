@@ -2,13 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri App</title>
-    <script type="module" src="/main.js" defer></script>
+    <title>BOTW Save Manager</title>
+    <script src="js/index.js" defer></script>
+    <script src="js/jsonHandler.js" defer></script>
+    <script src="js/notifications.js" defer></script>
+    <script src="js/backupHandler.js" defer></script>
   </head>
 
   <body>
     <h1>Welcome to the BOTW Save Manager</h1>
+
+    <input id="backupName" name="backupName" value="" type="text">
+    <label for="backupName">New Backup Name</label>
+    <button onclick="newBackup()">Make Backup</button>
+
+    <div id="page"></div>
+    <div id="notification">
+      <p id="notificationText"></p>
+    </div>
   </body>
 </html>

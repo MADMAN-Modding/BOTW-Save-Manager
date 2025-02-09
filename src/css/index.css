@@ -1,0 +1,44 @@
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #ffe21c);
+}
+
+html {
+  font-family: Verdana !important;
+  color: white !important;
+}
+
+:root {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  background-color: #221e47;
+  background-image: url("../images/background.jpg");
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+#notification {
+  position: absolute;
+  right: 20px;
+  top: -80px;
+  width: 200px;
+  height: fit-content;
+  background-color: white;
+  border-radius: 20%;
+  transition: top 0.3s;
+}
+
+#notificationText {
+  color: black;
+  text-align: center;
+  height: fit-content;
+}
