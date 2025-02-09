@@ -32,6 +32,7 @@ pub fn get_config_dir() -> String {
 /// Directory for program data
 /// 
 /// eg: Saves
+#[tauri::command]
 pub fn get_data_dir() -> String {
     let proj_dir = PROJ_DIRS.get().expect("PROJ_DIRS has not been initialized");
 

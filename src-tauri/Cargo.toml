@@ -1,5 +1,5 @@
 [package]
-name = "botw-save-manager"
+name = "botw_save_manager"
 version = "0.1.0"
 description = "A manager for BOTW Saves"
 authors = ["MADMAN-Modding"]

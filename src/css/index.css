@@ -42,3 +42,21 @@ h1 {
   text-align: center;
   height: fit-content;
 }
+
+.backup {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.273);
+  width: 80vw;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+#saveIcon {
+  height: 50px;
+  margin-left: auto;
+}
