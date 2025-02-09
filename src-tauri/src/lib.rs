@@ -14,6 +14,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             save_handler::new_save,
             save_handler::remove_save,
+            save_handler::load_save,
             dir_lister::get_folders_in_dir,
             constants::get_data_dir,
             image_handler::get_image_bytes

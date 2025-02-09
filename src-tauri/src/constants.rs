@@ -53,3 +53,7 @@ fn gen_dirs(proj_dir: &ProjectDirs) {
 pub fn get_mlc_dir() -> String {
     read_config_json("mlcPath")
 }
+
+pub fn get_save_dir() -> String {
+    format!("{}/usr/save/00050000/101c9400/user/80000001/", get_mlc_dir())
+}
