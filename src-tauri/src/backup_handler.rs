@@ -15,8 +15,6 @@ pub fn new_backup(name: String) -> Result<(), String> {
 
     let backup_dir = format!("{}/{}", get_data_dir(), name);
 
-    println!("{}", backup_dir);
-
     let _ = create_dir_all(backup_dir.clone());
 
     // Files and folders Vectors for the files to be copied
@@ -34,6 +32,15 @@ pub fn new_backup(name: String) -> Result<(), String> {
     copy_directory(mlc_path, backup_dir).map_err(|e| e.to_string())?;
 
     Ok(())
+}
+
+#[tauri::command]
+pub fn remove_backup(path: String) -> Result<(), String> {
+    let path = format!("{}/{}", get_data_dir(), path);
+
+    fs::remove_dir_all(path).map_err(|e| e.to_string())?;
+
+    return Ok(());
 }
 
 fn copy_directory(from: String, to: String) -> Result<(), Box<dyn std::error::Error>> {

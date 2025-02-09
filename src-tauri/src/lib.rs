@@ -13,6 +13,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             backup_handler::new_backup,
+            backup_handler::remove_backup,
             dir_lister::get_folders_in_dir,
             constants::get_data_dir,
             image_handler::get_image_bytes

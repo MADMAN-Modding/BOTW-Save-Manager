@@ -54,9 +54,34 @@ h1 {
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
+  margin-top: 10px;
+}
+
+#makeBackup {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #saveIcon {
   height: 50px;
   margin-left: auto;
+}
+
+.controlIcons {
+  height: 50px;
+  width: 50px;
+}
+
+.controlIcons:hover {
+  cursor: pointer;
+}
+
+#delete {
+  position: absolute;
+  right: calc(10vw + 105px);
+}
+
+#load {
+  position: absolute;
+  right: calc(10vw + 165px);
 }

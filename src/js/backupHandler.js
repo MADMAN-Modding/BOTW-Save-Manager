@@ -11,12 +11,13 @@ async function makeListings() {
     backups.innerHTML = "";
 
     folders.forEach(async folder => {
-        console.log(folder);
         let img = await getImage(folder);
         backups.innerHTML += `
             <div class="backup">
                 <span>${folder}</span>
-                <img id="saveIcon" src="${img}" />
+                <img class="controlIcons" id="load" onclick=loadBackup("${folder}") src="images/load.png"/>
+                <img class="controlIcons" id="delete" onclick=removeBackup("${folder}") src="images/delete.png"/>
+                <img id="saveIcon" src="${img}"/>
             </div>`;
     });
     
@@ -27,11 +28,39 @@ async function newBackup() {
 
     let backupName = document.getElementById("backupName").value;
 
+    console.log(backupName);
+
+    let illegalChars = ["\"", "\\", "/"];
+
+    if (backupName == "") {
+        pushNotification("No path provided");
+        return;
+    }
+    
+    for (let index = 0; index < illegalChars.length; index++) {
+        const char = illegalChars[index];
+        
+        if (backupName.includes(char)) {
+            await pushNotification(`Illegal Char: ${char}`);
+            return;
+        }
+    }
+
     invoke("new_backup", {"name": backupName}).catch(error => pushNotification(error));
 
     pushNotification("Backup Complete");
 
     makeListings();
+}
+
+async function removeBackup(path) {
+    pushNotification("Removing Backup: " + path);
+
+    await invoke("remove_backup", {"path": path});
+
+    pushNotification("Removed Backup: " + path);
+
+    makeListings()
 }
 
 /**
