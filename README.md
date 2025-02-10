@@ -6,9 +6,6 @@ The red X deletes them
 
 <a href="https://github.com/MADMAN-Modding/BOTW-Save-Manager/releases/latest">Download</a>
 
-# Bugs
-* Spaces in the save names is not currently supported
-
 # To-do
 * Cemu Account Swapping
 * Backing up to current saves
