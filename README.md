@@ -8,4 +8,3 @@ The red X deletes them
 
 # To-do
 * Cemu Account Swapping
-* Backing up to current saves
