@@ -1,6 +1,6 @@
 [package]
 name = "botw_save_manager"
-version = "0.1.0"
+version = "1.0.0"
 description = "A manager for BOTW Saves"
 authors = ["MADMAN-Modding"]
 edition = "2021"
@@ -25,3 +25,15 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 directories = "6.0.0"
 once_cell = "1.20.3"
+
+[package.metadata.wix]
+name = "BOTW Save Manager"
+banner = "icons/banner.png"
+culture = "en-US"
+dbg-build = false
+dbg-name = false
+no-build = false
+path-guid = "BFD25009-65A4-4D1E-97F1-0030465D90D6"
+product-icon = "icons/icon.ico"
+upgrade-guid = "B36177BE-EA4D-44FB-B05C-EDDABDAA95CA"
+dialog = "icons/dialog.png"

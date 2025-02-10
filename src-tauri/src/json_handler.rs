@@ -118,7 +118,7 @@ pub fn write_json(path: String, json_key: String, mut value: String) {
 
 #[tauri::command]
 pub fn write_config(key: String, value: &str) {
-    write_json(constants::get_config_json_path(), key, value.to_string());
+    write_json(constants::get_config_json_path(), key, value.to_string().replace("\\\\", "\\"));
 }
 
 /// Resets the config
