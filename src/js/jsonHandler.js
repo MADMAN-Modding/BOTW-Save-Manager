@@ -21,10 +21,4 @@ async function writeConfigJSON(key, value) {
     // Update the data
     invoke('write_config', {"key": key, "value": value });
 }
-
-async function getDir() {
-    const dirHandle = await window.showDirectoryPicker();
-  
-    // run code for dirHandle
-  }
   

@@ -116,21 +116,14 @@ pub fn write_json(path: String, json_key: String, mut value: String) {
     .expect("Error writing file");
 }
 
+/// Writes the config.json file
+/// 
+/// # Arguments
+/// * key: String - key to update
+/// * value: String - value to update the key to
 #[tauri::command]
 pub fn write_config(key: String, value: &str) {
     write_json(constants::get_config_json_path(), key, value.to_string().replace("\\\\", "\\"));
-}
-
-/// Resets the config
-#[tauri::command]
-pub fn reset_config() {
-    let default_json = get_default_json_data();
-    for key in default_json.as_object().unwrap() {
-        // If the key is a string, it will write the key and value to the config file
-        let value = key.1.to_string().replace("\"", "");
-
-        write_config(key.0.to_owned(), value.as_str());
-    }
 }
 
 pub fn get_default_json_data() -> serde_json::Value {

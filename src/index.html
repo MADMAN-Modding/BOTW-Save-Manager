@@ -15,17 +15,21 @@
   <body>
     <h1>Welcome to the BOTW Save Manager</h1>
 
+    <!-- Save Name -->
     <center>
       <label for="saveName">New Save Name</label>
       <input id="saveName" name="saveName" value="" type="text">
       <button onclick="newSave()">Make Save</button>
     </center>
+
+    <!-- MLC Path -->
     <center>
       <label for="mlcPath">mlcPath</label>
       <input id="mlcPath" name="mlcPath" value="" type="text" style="width: 450px;">
       <button onclick="updateMLC()">Set mlcPath</button>
     </center>
   
+    <!--Initial Divs for parts of the app-->
     <div id="saves"></div>
     <div id="page"></div>
     <div id="notification">

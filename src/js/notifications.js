@@ -14,6 +14,9 @@ let notificationID = 0;
  * Updates the notification box and text elements to show the provided message.
  *
  * Automatically hides the notification after the specified display time, unless a new notification is pushed before it times out.
+ * 
+ * @async
+ * @returns {void}
  */
 async function pushNotification(text) {
     // Increment the notification ID to track this notification.

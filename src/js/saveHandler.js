@@ -26,7 +26,21 @@ async function makeListings() {
     saves.innerHTML = saveElements.join(""); // Update once to prevent layout thrashing
 }
 
-
+/**
+ * Makes a new save with the name provided in the `saveName` input element.
+ * 
+ * First checks if the `saveName` is empty, if so, it will push a notification and return.
+ * 
+ * Then checks if the `saveName` contains any illegal characters, if so, it will push a notification and return.
+ * 
+ * Calls the `new_save` function from rust, passing the argument `name` with the value of `saveName`.
+ * 
+ * Pushes a notification that the save is complete.
+ * 
+ * Calls the `makeListings` function.
+ * @async
+ * @returns {void} 
+ */
 async function newSave() {
     pushNotification("Creating save");
 
@@ -57,14 +71,26 @@ async function newSave() {
     makeListings();
 }
 
-async function removeSave(path) {
-    console.log(path);
+/**
+ * Removes a save with the name provided in the `save` parameter.
+ * 
+ * Calls the `remove_save` function from rust, passing the argument `save` with the value of `save`.
+ * 
+ * Pushes a notification that the save has been removed.
+ * 
+ * Calls the `makeListings` function.
+ * 
+ * @async
+ * @param {String} save 
+ */
+async function removeSave(save) {
+    console.log(save);
     
-    pushNotification("Removing Save: " + path);
+    pushNotification("Removing Save: " + save);
 
-    await invoke("remove_save", {"path": path});
+    await invoke("remove_save", {"save": save});
 
-    pushNotification("Removed Save: " + path);
+    pushNotification("Removed Save: " + save);
 
     makeListings()
 }
@@ -72,7 +98,7 @@ async function removeSave(path) {
 async function loadSave(path) {
     pushNotification("Loading Save: " + path);
 
-    await invoke("load_save", {"path": path});
+    await invoke("load_save", {"save": path});
 
     pushNotification("Loaded Save: " + path);
 }
@@ -85,9 +111,9 @@ async function loadSave(path) {
  * Converts the `Uint8Array` into a `Blob` with the MIME type `image/png`.
  * 
  * Create of an `ObjectURL` of the blob
- * 
- * Sets the `esportsLogo` document to the `ObjectURL`
  * @async
+ * @param {String} path
+ * @returns {String} imageURL - The URL of the image
 */
 async function getImage(path) {
     let bytes;
@@ -104,4 +130,5 @@ async function getImage(path) {
     return imageURL;
 }
 
+// Call the makeListings function to populate the saves div
 makeListings();

@@ -39,6 +39,7 @@ pub fn get_data_dir() -> String {
     ProjectDirs::data_dir(proj_dir).to_str().unwrap().to_string()
 }
 
+/// Path to the config.json file
 pub fn get_config_json_path() -> String {
     format!("{}/config.json", get_config_dir())
 }
@@ -50,10 +51,12 @@ fn gen_dirs(proj_dir: &ProjectDirs) {
     let _ = create_dir_all(proj_dir.data_dir());
 }
 
+/// Returns the mlc path from the config file
 pub fn get_mlc_dir() -> String {
     read_config_json("mlcPath")
 }
 
+/// Returns the location of the save files
 pub fn get_save_dir() -> String {
     format!("{}/usr/save/00050000/101c9400/user/80000001/", get_mlc_dir())
 }

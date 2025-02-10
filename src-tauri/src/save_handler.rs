@@ -1,4 +1,4 @@
-use std::{fs::{self, create_dir_all}, path::Path};
+use std::{error::Error, fs::{self, create_dir_all}, path::Path};
 
 use crate::{
     constants::{get_data_dir, get_save_dir},
@@ -34,25 +34,52 @@ pub fn new_save(name: String) -> Result<(), String> {
     Ok(())
 }
 
+/// Deletes the save
+/// 
+/// # Arguments
+/// * save: String - name of the save to remove
+/// 
+/// # Returns
+/// * Ok(()) - If the removal is successful
+/// * Err(String) - If the load has an IO error
 #[tauri::command]
-pub fn remove_save(path: String) -> Result<(), String> {
-    let path = format!("{}/{}", get_data_dir(), path);
+pub fn remove_save(save: String) -> Result<(), String> {
+    let save = format!("{}/{}", get_data_dir(), save);
 
-    fs::remove_dir_all(path).map_err(|e| e.to_string())?;
+    fs::remove_dir_all(save).map_err(|e| e.to_string())?;
 
     return Ok(());
 }
 
+/// Loads the save
+/// 
+/// Deletes the current save first
+/// 
+/// # Arguments
+/// * save: String - name of the save to load
+/// 
+/// # Returns
+/// * Ok (()) - If the load is successful
+/// * Err(String) - If the load has an IO error
 #[tauri::command]
-pub fn load_save(path: String) -> Result<(), String> {
+pub fn load_save(save: String) -> Result<(), String> {
     fs::remove_dir_all(get_save_dir()).map_err(|e| e.to_string())?;
 
-    copy_directory(format!("{}/{}", get_data_dir(), path), get_save_dir()).map_err(|e| e.to_string())?;
+    copy_directory(format!("{}/{}", get_data_dir(), save), get_save_dir()).map_err(|e| e.to_string())?;
 
     Ok(())
 }
 
-fn copy_directory(from: String, to: String) -> Result<(), Box<dyn std::error::Error>> {
+/// Recursively copies the whole directory
+/// 
+/// # Arguments
+/// * from: String - directory to be copied
+/// * to: String - directory to copy to
+/// 
+/// # Returns
+/// * Ok(()) - If the copy is successful
+/// * Box<dyn Error> - If there is an IO error
+fn copy_directory(from: String, to: String) -> Result<(), Box<dyn Error>> {
     // Create the target directory
     create_dir_all(&to)?;
 
