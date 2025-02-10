@@ -4,24 +4,28 @@
  * @async
  */
 async function makeListings() {
-    let folders = await invoke("get_folders_in_dir", {"path": await invoke("get_data_dir")});
+    let folders = await invoke("get_folders_in_dir", { "path": await invoke("get_data_dir") });
 
     let saves = document.getElementById("saves");
 
     saves.innerHTML = "";
 
-    folders.forEach(async folder => {
+    let saveElements = await Promise.all(folders.map(async folder => {
         let img = await getImage(folder);
-        saves.innerHTML += `
+        console.log(folder);
+
+        return `
             <div class="save">
                 <span>${folder}</span>
-                <img class="controlIcons" id="load" onclick=loadSave("${folder}") src="images/load.png"/>
-                <img class="controlIcons" id="delete" onclick=removeSave("${folder}") src="images/delete.png"/>
+                <img class="controlIcons" id="load" onclick="loadSave('${folder}')" src="images/load.png"/>
+                <img class="controlIcons" id="delete" onclick="removeSave('${folder}')" src="images/delete.png"/>
                 <img id="saveIcon" src="${img}"/>
             </div>`;
-    });
-    
+    }));
+
+    saves.innerHTML = saveElements.join(""); // Update once to prevent layout thrashing
 }
+
 
 async function newSave() {
     pushNotification("Creating save");
@@ -54,6 +58,8 @@ async function newSave() {
 }
 
 async function removeSave(path) {
+    console.log(path);
+    
     pushNotification("Removing Save: " + path);
 
     await invoke("remove_save", {"path": path});
