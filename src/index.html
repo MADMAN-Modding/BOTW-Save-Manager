@@ -5,10 +5,11 @@
     <link rel="stylesheet" href="css/index.css" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BOTW Save Manager</title>
-    <script src="js/index.js" defer></script>
+    <script src="js/main.js" defer></script>
     <script src="js/jsonHandler.js" defer></script>
     <script src="js/notifications.js" defer></script>
     <script src="js/saveHandler.js" defer></script>
+    <script src="js/index.js" defer></script>
   </head>
 
   <body>
@@ -19,9 +20,13 @@
       <input id="saveName" name="saveName" value="" type="text">
       <button onclick="newSave()">Make Save</button>
     </center>
-
+    <center>
+      <label for="mlcPath">mlcPath</label>
+      <input id="mlcPath" name="mlcPath" value="" type="text" style="width: 450px;">
+      <button onclick="updateMLC()">Set mlcPath</button>
+    </center>
+  
     <div id="saves"></div>
-
     <div id="page"></div>
     <div id="notification">
       <p id="notificationText"></p>

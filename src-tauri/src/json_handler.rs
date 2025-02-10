@@ -116,8 +116,9 @@ pub fn write_json(path: String, json_key: String, mut value: String) {
     .expect("Error writing file");
 }
 
-pub fn write_config(json_key: String, value: &str) {
-    write_json(constants::get_config_json_path(), json_key, value.to_string());
+#[tauri::command]
+pub fn write_config(key: String, value: &str) {
+    write_json(constants::get_config_json_path(), key, value.to_string());
 }
 
 /// Resets the config

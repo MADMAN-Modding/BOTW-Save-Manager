@@ -17,7 +17,9 @@ pub fn run() {
             save_handler::load_save,
             dir_lister::get_folders_in_dir,
             constants::get_data_dir,
-            image_handler::get_image_bytes
+            image_handler::get_image_bytes,
+            json_handler::read_config_json,
+            json_handler::write_config
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

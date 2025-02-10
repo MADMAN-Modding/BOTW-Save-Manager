@@ -18,9 +18,13 @@ async function readConfigJSON(key) {
  * @async
  */
 async function writeConfigJSON(key, value) {
-    // Gets the json path
-    let jsonPath = await invoke('get_config_json_path');
-
     // Update the data
-    invoke('write_json', { "path": jsonPath, "jsonKey": key, "value": value });
+    invoke('write_config', {"key": key, "value": value });
 }
+
+async function getDir() {
+    const dirHandle = await window.showDirectoryPicker();
+  
+    // run code for dirHandle
+  }
+  
