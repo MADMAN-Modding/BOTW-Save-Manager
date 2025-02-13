@@ -3,21 +3,8 @@ async function setup() {
     
     
     if (mlcPath == "NOT_SET") {
-        let time = new Date();
-
-        let startTime = time.getTime();
-
-        pushNotification("Searching for mlc01 path, this could take a while...")
-        await invoke("start_search").then((value) => 
-            {
-                time = new Date();
-                // Uses a bitwise operator to remove the decimals then divides by 1000 to convert to seconds
-                let duration = ((time.getTime() - startTime) / 1000) | 0;
-                
-                pushNotification(`${value} in ${duration} seconds`);
-                writeConfigJSON("mlcPath", value);
-                mlcPath = value;
-            });
+        scanMLC();
+        return;
     }
     
     document.getElementById("mlcPath").value = mlcPath;
@@ -42,6 +29,25 @@ async function updateMLC() {
     writeConfigJSON("mlcPath", path);
 
     pushNotification("Updated MLC Path")
+}
+
+async function scanMLC() {
+    let time = new Date();
+
+    let startTime = time.getTime();
+
+    pushNotification("Searching for mlc01 path, this could take a while...")
+    await invoke("start_search").then((value) => 
+        {
+            time = new Date();
+            // Uses a bitwise operator to remove the decimals then divides by 1000 to convert to seconds
+            let duration = ((time.getTime() - startTime) / 1000) | 0;
+            
+            pushNotification(`Found ${value} in ${duration} seconds`);
+            writeConfigJSON("mlcPath", value);
+            return value;
+        });
+    document.getElementById("mlcPath").value = mlcPath;
 }
 
 setup();

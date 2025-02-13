@@ -79,10 +79,15 @@ pub async fn start_search() -> Result<String, String> {
         _ => "/"
     };
     
+    // Makes the thread
     let thread =
-    thread::spawn(|| {ThreadData::find_mlc01(thread_data.clone(), path.to_string())});
+    thread::spawn(|| ThreadData::find_mlc01(thread_data.clone(), path.to_string()));
     
+    // Result from the thread
     let result = thread.join().unwrap();
+
+    // Allows future scanning to take place
+    thread_data.lock().unwrap().set_stop(false);
 
     match result {
         Ok(value) => Ok(value),
