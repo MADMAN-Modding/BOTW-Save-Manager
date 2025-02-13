@@ -1,5 +1,7 @@
 async function setup() {
     document.getElementById("mlcPath").value = await readConfigJSON("mlcPath");
+
+    invoke("start_search", {"path" : "C:/Users/mad/"}).then((value) => pushNotification(value));
 }
 
 /**
