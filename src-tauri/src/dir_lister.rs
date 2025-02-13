@@ -1,8 +1,8 @@
-use std::{error::Error, fs::{self, ReadDir}, sync::{Arc, Mutex}, thread, time::Duration};
+use std::{env, error::Error, fs::{self, ReadDir}, sync::{Arc, Mutex}, thread};
 
 use once_cell::sync::OnceCell;
 
-use crate::threading::thread_data::ThreadData;
+use crate::thread_data::ThreadData;
 
 static THREAD_DATA: OnceCell<Arc<Mutex<ThreadData>>> = OnceCell::new();
 
@@ -65,20 +65,28 @@ fn get_dir(path: String) -> Result<ReadDir, Box<dyn Error>> {
     Ok(dir)
 }
 
+
+
 #[tauri::command]
-pub fn start_search(path: String) -> Result<String, String> {
+pub async fn start_search() -> Result<String, String> {
     let thread_data = THREAD_DATA.get().unwrap();
 
+    // Sets the path to search based on the OS
+    let path = match env::consts::OS.to_string().as_str() {
+        "windows" => "C:/",
+        "linux" => "/home",
+        "macos" => "/Users",
+        _ => "/"
+    };
     
-
     let thread =
-    thread::spawn(|| {ThreadData::find_mlc01(thread_data.clone(), path)});
+    thread::spawn(|| {ThreadData::find_mlc01(thread_data.clone(), path.to_string())});
     
     let result = thread.join().unwrap();
 
     match result {
-        Ok(value) => {println!("{}", value); Ok(value)},
-        Err(error) => {println!("{}", error); Err(error)}
+        Ok(value) => Ok(value),
+        Err(error) => Err(error)
     }
 
 }
@@ -87,7 +95,6 @@ impl ThreadData {
     fn find_mlc01(thread_data: Arc<Mutex<Self>>, path: String) -> Result<String, String> {
         
         let mut mlc01: Result<String, String> = Ok("NOT_SET".to_string());
-        println!("Searching... {}", &path);
 
         for drive in fs::read_dir(&path).map_err(|e| e.to_string())? {
             let drive = drive.map_err(|e| e.to_string())?;
@@ -96,8 +103,6 @@ impl ThreadData {
 
             if drive.file_name().eq("mlc01") {
                 mlc01 = Ok(drive.path().to_str().unwrap().to_string());
-                println!("FOUND");
-                thread::sleep(Duration::new(5, 0));
                 thread_data.lock().unwrap().set_stop(true);
                 return mlc01;
             } else {
@@ -105,11 +110,6 @@ impl ThreadData {
                     mlc01 = Self::find_mlc01(thread_data.clone(), drive.path().to_str().unwrap().to_string());
                 }
             }
-        }
-
-        match mlc01 {
-            Ok(ref path) => println!("{}", path),
-            Err(ref err) => println!("{}", err)
         }
         mlc01
     }

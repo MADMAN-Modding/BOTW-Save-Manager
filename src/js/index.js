@@ -1,7 +1,26 @@
 async function setup() {
-    document.getElementById("mlcPath").value = await readConfigJSON("mlcPath");
+    mlcPath = await readConfigJSON("mlcPath");
+    
+    
+    if (mlcPath == "NOT_SET") {
+        let time = new Date();
 
-    invoke("start_search", {"path" : "C:/Users/mad/"}).then((value) => pushNotification(value));
+        let startTime = time.getTime();
+
+        pushNotification("Searching for mlc01 path, this could take a while...")
+        await invoke("start_search").then((value) => 
+            {
+                time = new Date();
+                // Uses a bitwise operator to remove the decimals then divides by 1000 to convert to seconds
+                let duration = ((time.getTime() - startTime) / 1000) | 0;
+                
+                pushNotification(`${value} in ${duration} seconds`);
+                writeConfigJSON("mlcPath", value);
+                mlcPath = value;
+            });
+    }
+    
+    document.getElementById("mlcPath").value = mlcPath;
 }
 
 /**

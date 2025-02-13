@@ -5,6 +5,7 @@
 html {
   font-family: Verdana !important;
   color: white !important;
+  overflow-x: hidden;
 }
 
 :root {

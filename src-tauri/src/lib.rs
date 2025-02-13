@@ -3,10 +3,7 @@ pub mod constants;
 pub mod save_handler;
 pub mod json_handler;
 pub mod image_handler;
-pub mod threading {
-    pub mod thread_data;
-    pub mod thread_pool;
-}
+pub mod thread_data;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
