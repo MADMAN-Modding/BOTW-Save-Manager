@@ -65,8 +65,11 @@ fn get_dir(path: String) -> Result<ReadDir, Box<dyn Error>> {
     Ok(dir)
 }
 
-
-
+/// Starts the search for the MLC01 folder
+/// 
+/// **Returns**
+/// * String - Path to the MLC01 folder
+/// * String - Error message
 #[tauri::command]
 pub async fn start_search() -> Result<String, String> {
     let thread_data = THREAD_DATA.get().unwrap();
@@ -89,6 +92,7 @@ pub async fn start_search() -> Result<String, String> {
     // Allows future scanning to take place
     thread_data.lock().unwrap().set_stop(false);
 
+    // Returns the result
     match result {
         Ok(value) => Ok(value),
         Err(error) => Err(error)
@@ -97,6 +101,14 @@ pub async fn start_search() -> Result<String, String> {
 }
 
 impl ThreadData {
+    /// Finds the MLC01 folder
+    /// 
+    /// **Arguments**
+    /// * thread_data: Arc<Mutex<Self>> - ThreadData object
+    /// 
+    /// **Returns**
+    /// * String - Path to the MLC01 folder
+    /// * String - Error message
     fn find_mlc01(thread_data: Arc<Mutex<Self>>, path: String) -> Result<String, String> {
         
         let mut mlc01: Result<String, String> = Ok("NOT_SET".to_string());

@@ -31,6 +31,20 @@ async function updateMLC() {
     pushNotification("Updated MLC Path")
 }
 
+/**
+ * Scans for the MLC path.
+ * 
+ * Pushes a notification that the MLC path is being searched for.
+ * 
+ * Pushes a notification that the MLC path has been found.
+ * 
+ * Writes to the config and returns the value of the promise.
+ * 
+ * Updates the value of the `mlcPath` input element to the value from the promise.
+ * 
+ * @async
+ * @returns {String}
+*/
 async function scanMLC() {
     let time = new Date();
 

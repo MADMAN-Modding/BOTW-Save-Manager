@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex};
 // Adds necessary traits to the ThreadData structure
 #[derive(Clone, Copy, Debug)]
 
-/// Used for sharing data between the `http_server` thread and the thread the app is running on
+/// Used for sharing data between threads for tasks and the thread the app is running on
 pub struct ThreadData {
     /// `stop` - For telling the thread to stop itself
     pub(crate) stop: bool,
