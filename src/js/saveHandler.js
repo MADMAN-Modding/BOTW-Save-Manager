@@ -17,8 +17,9 @@ async function makeListings() {
         return `
             <div class="save">
                 <span>${folder}</span>
-                <img class="controlIcons" id="load" onclick="loadSave('${folder}')" src="images/load.png"/>
-                <img class="controlIcons" id="delete" onclick="removeSave('${folder}')" src="images/delete.png"/>
+                <img class="controlIcons" alt="Backup to this Save" id="save" onclick="newSave('${folder}')" src="images/icon.png"/>
+                <img class="controlIcons" alt="Load this Save" id="load" onclick="loadSave('${folder}')" src="images/load.png"/>
+                <img class="controlIcons" alt="Delete this Save" id="delete" onclick="removeSave('${folder}')" src="images/delete.png"/>
                 <img id="saveIcon" src="${img}"/>
             </div>`;
     }));
@@ -41,17 +42,15 @@ async function makeListings() {
  * @async
  * @returns {void} 
  */
-async function newSave() {
+async function newSave(saveName) {
     pushNotification("Creating save");
-
-    let saveName = document.getElementById("saveName").value;
 
     console.log(saveName);
 
     let illegalChars = ["\"", "\\", "/"];
 
     if (saveName == "") {
-        pushNotification("No path provided");
+        pushNotification("No save name provided");
         return;
     }
     

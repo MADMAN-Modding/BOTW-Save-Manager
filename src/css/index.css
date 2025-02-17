@@ -86,3 +86,8 @@ h1 {
   position: absolute;
   right: calc(10vw + 165px);
 }
+
+#save {
+  position: absolute;
+  right: calc(10vw + 225px);
+}
