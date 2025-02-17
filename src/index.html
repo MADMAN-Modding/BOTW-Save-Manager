@@ -29,6 +29,11 @@
       <button onclick="updateMLC()">Set mlcPath</button>
       <button onclick="scanMLC()">Scan for mlcPath</button>
     </center>
+
+    <center>
+      <label for="backupCurrentSave">Backup Current Save on Load?</label>
+      <input id="backupCurrentSave" name="backupCurrentSave" checked="true" type="checkbox" onchange="setBackupCurrentSave()">
+    </center>
   
     <!--Initial Divs for parts of the app-->
     <div id="saves"></div>

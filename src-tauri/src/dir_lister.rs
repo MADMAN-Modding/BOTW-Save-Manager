@@ -77,8 +77,8 @@ pub async fn start_search() -> Result<String, String> {
     // Sets the path to search based on the OS
     let path = match env::consts::OS.to_string().as_str() {
         "windows" => "C:/",
-        "linux" => "/home",
-        "macos" => "/Users",
+        "linux" => "/",
+        "macos" => "/",
         _ => "/"
     };
     

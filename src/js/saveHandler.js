@@ -91,7 +91,7 @@ async function removeSave(save) {
 
     pushNotification("Removed Save: " + save);
 
-    makeListings()
+    makeListings();
 }
 
 async function loadSave(path) {
@@ -100,6 +100,8 @@ async function loadSave(path) {
     await invoke("load_save", {"save": path});
 
     pushNotification("Loaded Save: " + path);
+
+    makeListings();
 }
 
 /**

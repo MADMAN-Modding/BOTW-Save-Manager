@@ -7,25 +7,26 @@ use crate::{
 
 #[tauri::command]
 pub fn new_save(name: String) -> Result<(), String> {
+    let new_save_dir = format!("{}/{}", get_data_dir(), name);
+
+    if Path::new(&new_save_dir).exists() {
+        backup(new_save_dir.clone())?;
+    }
+ 
     let save_dir = get_save_dir();
 
-    if Path::new(&name).exists() {
-        return Err("Save Already Exists".to_string())
-    }
-
-    let new_save_dir = format!("{}/{}", get_data_dir(), name);
 
     let _ = create_dir_all(new_save_dir.clone());
 
     // Files and folders Vectors for the files to be copied
-    let files = get_files_in_dir(save_dir.clone()).map_err(|err| format!("File read error: {}", err))?;
+    let files = get_files_in_dir(save_dir.clone()).map_err(|_| format!("Error reading current save"))?;
 
     // Copies the files
     for file in files {
         let file_path = format!("{}/{}", save_dir, file);
 
         let _ = fs::copy(file_path, format!("{}/{}", new_save_dir.clone(), file))
-            .map_err(|err| return format!("File Copy Error: {}", err))?;
+            .map_err(|_| return format!("Error copying save data"))?;
     }
 
 
@@ -46,14 +47,18 @@ pub fn new_save(name: String) -> Result<(), String> {
 pub fn remove_save(save: String) -> Result<(), String> {
     let save = format!("{}/{}", get_data_dir(), save);
 
-    fs::remove_dir_all(save).map_err(|e| e.to_string())?;
+    fs::remove_dir_all(save).map_err(|_| "Error deleting selected save".to_string())?;
 
     return Ok(());
 }
 
 /// Loads the save
 /// 
-/// Deletes the current save first
+/// Makes a backup of the current save
+/// 
+/// Deletes the current save
+/// 
+/// Loads the selected save
 /// 
 /// # Arguments
 /// * save: String - name of the save to load
@@ -63,9 +68,19 @@ pub fn remove_save(save: String) -> Result<(), String> {
 /// * Err(String) - If the load has an IO error
 #[tauri::command]
 pub fn load_save(save: String) -> Result<(), String> {
+    backup(get_save_dir())?;
+
     fs::remove_dir_all(get_save_dir()).map_err(|e| e.to_string())?;
 
-    copy_directory(format!("{}/{}", get_data_dir(), save), get_save_dir()).map_err(|e| e.to_string())?;
+    copy_directory(format!("{}/{}", get_data_dir(), save), get_save_dir()).map_err(|_| "Error loading current save".to_string())?;
+
+    Ok(())
+}
+
+fn backup(from: String) -> Result<(), String> {
+    let current_time = chrono::offset::Local::now();
+
+    copy_directory(from, format!("{}/Backup {}", get_data_dir(), current_time)).map_err(|_| "Error backing up current save".to_string())?;
 
     Ok(())
 }

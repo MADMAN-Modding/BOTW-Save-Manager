@@ -1,15 +1,17 @@
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #ffe21c);
+@font-face {
+  font-family: 'BOTW';
+  src: url('The Wild Breath of Zelda.otf');
 }
 
+
 html {
-  font-family: Verdana !important;
+  font-family: BOTW !important;
   color: white !important;
   overflow-x: hidden;
 }
 
 :root {
-  font-size: 16px;
+  font-size: 24px;
   line-height: 24px;
   font-weight: 400;
 

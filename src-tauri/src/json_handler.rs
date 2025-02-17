@@ -128,6 +128,7 @@ pub fn write_config(key: String, value: &str) {
 
 pub fn get_default_json_data() -> serde_json::Value {
     json!({
-        "mlcPath": "NOT_SET"
+        "mlcPath": "NOT_SET",
+        "backupCurrentSave" : "true"
     })
 }
