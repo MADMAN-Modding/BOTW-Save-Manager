@@ -1,4 +1,4 @@
-use std::{error::Error, fs::{self, create_dir_all}, path::Path};
+use std::{env::current_exe, error::Error, fs::{self, create_dir_all}, path::Path};
 
 use crate::{
     constants::{get_data_dir, get_save_dir},
@@ -72,15 +72,17 @@ pub fn load_save(save: String) -> Result<(), String> {
 
     fs::remove_dir_all(get_save_dir()).map_err(|e| e.to_string())?;
 
-    copy_directory(format!("{}/{}", get_data_dir(), save), get_save_dir()).map_err(|_| "Error loading current save".to_string())?;
+    copy_directory(format!("{}/{}", get_data_dir(), save), get_save_dir()).map_err(|e| format!("Error loading current save: {}", e))?;
 
     Ok(())
 }
 
 fn backup(from: String) -> Result<(), String> {
-    let current_time = chrono::offset::Local::now();
+    let mut current_time = chrono::offset::Local::now().to_string();
 
-    copy_directory(from, format!("{}/Backup {}", get_data_dir(), current_time)).map_err(|_| "Error backing up current save".to_string())?;
+    current_time = current_time.replace(":", ".");
+
+    copy_directory(from, format!("{}/Backup {}", get_data_dir(), current_time)).map_err(|e| format!("Error loading current save: {}", e))?;
 
     Ok(())
 }
