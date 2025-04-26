@@ -1,6 +1,6 @@
 /**
  * Makes all the divs for showing the available saves
- * @returns {void}
+ * @returns {Promise<void>}
  * @async
  */
 async function makeListings() {
@@ -97,11 +97,11 @@ async function removeSave(save) {
 async function loadSave(path) {
     pushNotification("Loading Save: " + path);
 
-    await invoke("load_save", {"save": path});
+    await invoke("load_save", {"save": path}).catch((e) => {console.log(e)});
 
     pushNotification("Loaded Save: " + path);
 
-    makeListings();
+    await makeListings();
 }
 
 /**
